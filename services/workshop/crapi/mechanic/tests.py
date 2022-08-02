@@ -129,7 +129,7 @@ class MechanicSignUpTestCase(TestCase):
         self.assertEqual(res.json()['message'], messages.JWT_REQUIRED)
 
         jwt_token = get_jwt(user)
-        auth_headers = {'HTTP_AUTHORIZATION': 'Bearer ' + jwt_token}
+        auth_headers = {'HTTP_AUTHORIZATION': f'Bearer {jwt_token}'}
         res = self.client.get('/api/mechanic', **auth_headers)
         self.assertEqual(res.status_code, 200)
 
@@ -148,7 +148,7 @@ class MechanicSignUpTestCase(TestCase):
         self.assertNotEqual(res.status_code, 200)
 
         jwt_token = get_jwt(user, exp=datetime.utcnow()-timedelta(hours=3))
-        auth_headers = {'HTTP_AUTHORIZATION': 'Bearer ' + jwt_token}
+        auth_headers = {'HTTP_AUTHORIZATION': f'Bearer {jwt_token}'}
         res = self.client.get('/api/mechanic', **auth_headers)
         self.assertNotEqual(res.status_code, 200)
         self.assertEqual(res.json()['message'], messages.TOKEN_EXPIRED)

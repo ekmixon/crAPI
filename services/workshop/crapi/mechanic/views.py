@@ -143,7 +143,10 @@ class ReceiveReportView(APIView):
             created_on=timezone.now()
         )
         service_request.save()
-        report_link = "{}?report_id={}".format(reverse("get-mechanic-report"), service_request.id)
+        report_link = (
+            f'{reverse("get-mechanic-report")}?report_id={service_request.id}'
+        )
+
         report_link = request.build_absolute_uri(report_link)
         return Response({
             'id': service_request.id,

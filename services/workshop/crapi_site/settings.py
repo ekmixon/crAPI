@@ -119,15 +119,13 @@ LOGGING = {
         'standard': {
             'format': '%(asctime)s %(name)-12s [%(levelname)s]: %(message)s'
         },
-        'console': {
-            'format': '%(name)-12s %(levelname)-8s %(message)s'
-        },
+        'console': {'format': '%(name)-12s %(levelname)-8s %(message)s'},
     },
     'handlers': {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': BASE_DIR + '/debug.log',
+            'filename': f'{BASE_DIR}/debug.log',
             'formatter': 'standard',
         },
         'console': {
@@ -144,12 +142,13 @@ LOGGING = {
         'handlers': ['file'],
         'level': 'DEBUG',
     },
-   'djongo': {
+    'djongo': {
         'level': 'DEBUG',
         'handlers': ['console'],
-        'propogate': True,                        
+        'propogate': True,
     },
 }
+
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases

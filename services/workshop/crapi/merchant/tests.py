@@ -63,10 +63,13 @@ class MerchantTestCase(TestCase):
             created_on=timezone.now()
         )
         user_jwt_token = get_jwt(self.user)
-        self.user_auth_headers = {'HTTP_AUTHORIZATION': 'Bearer ' + user_jwt_token}
+        self.user_auth_headers = {'HTTP_AUTHORIZATION': f'Bearer {user_jwt_token}'}
 
         mechanic_jwt_token = get_jwt(User.objects.get(email=self.mechanic['email']))
-        self.mechanic_auth_headers = {'HTTP_AUTHORIZATION': 'Bearer ' + mechanic_jwt_token}
+        self.mechanic_auth_headers = {
+            'HTTP_AUTHORIZATION': f'Bearer {mechanic_jwt_token}'
+        }
+
 
         self.vehicle = Vehicle.objects.create(
             pincode='1234',

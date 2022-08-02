@@ -80,7 +80,7 @@ def create_mechanics():
                 result = cursor.fetchone()
                 user_id = result[0]
             except Exception as e:
-                logger.error("Failed to fetch user_login_id_seq"+str(e))
+                logger.error(f"Failed to fetch user_login_id_seq{str(e)}")
                 user_id = 1
 
             user = User.objects.create(
@@ -96,10 +96,10 @@ def create_mechanics():
             )
         else:
             user = uset.first()
-            
+
         if Mechanic.objects.filter(mechanic_code=mechanic_details['mechanic_code']):
             continue
-        
+
         Mechanic.objects.create(
             mechanic_code=mechanic_details['mechanic_code'],
             user=user
@@ -110,7 +110,7 @@ def create_mechanics():
             result = cursor.fetchone()
             user_details_id = result[0]
         except Exception as e:
-            logger.error("Failed to fetch user_details_id_seq"+str(e))
+            logger.error(f"Failed to fetch user_details_id_seq{str(e)}")
             user_details_id = 1
         UserDetails.objects.create(
             id=user_details_id,
@@ -132,7 +132,7 @@ def create_reports():
         return
     mechanics = Mechanic.objects.all()
     vehicles = Vehicle.objects.all()
-    for i in range(5):
+    for _ in range(5):
         try:
             mechanic = random.choice(mechanics)
             vehicle = random.choice(vehicles)
@@ -166,7 +166,7 @@ def create_reports():
             logger.debug(service_request.__dict__)
         except Exception as e:
             print(sys.exc_info()[0])
-            logger.error("Failed to create report: "+str(e))
+            logger.error(f"Failed to create report: {str(e)}")
 
 
 class CRAPIConfig(AppConfig):
@@ -176,7 +176,7 @@ class CRAPIConfig(AppConfig):
     name = 'crapi'
 
     def ready(self):
-        if not 'runserver' in sys.argv:
+        if 'runserver' not in sys.argv:
             return
         """
         Pre-populate mechanic model and product model
@@ -185,12 +185,12 @@ class CRAPIConfig(AppConfig):
         try:
             create_products()
         except Exception as e:
-            logger.error("Cannot Pre Populate Products: "+str(e))
+            logger.error(f"Cannot Pre Populate Products: {str(e)}")
         try:
             create_mechanics()
         except Exception as e:
-            logger.error("Cannot Pre Populate Mechanics: "+str(e))
+            logger.error(f"Cannot Pre Populate Mechanics: {str(e)}")
         try:
             create_reports()
         except Exception as e:
-            logger.error("Cannot Pre Populate Reports: "+str(e))
+            logger.error(f"Cannot Pre Populate Reports: {str(e)}")

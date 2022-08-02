@@ -43,7 +43,7 @@ class ProductTestCase(TestCase):
         self.client.post('/api/mechanic/signup', self.mechanic, content_type="application/json")
         self.user = User.objects.get(email=self.mechanic['email'])
         jwt_token = get_jwt(self.user)
-        self.auth_headers = {'HTTP_AUTHORIZATION': 'Bearer ' + jwt_token}
+        self.auth_headers = {'HTTP_AUTHORIZATION': f'Bearer {jwt_token}'}
 
     def test_add_products(self):
         """
